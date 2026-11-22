@@ -7,9 +7,6 @@ import jakarta.persistence.Table;
 
 import java.util.Objects;
 
-/**
- * Matching AGENT_SYNC_CONTRACT.md Section 4.3 (owned by Issue #4).
- */
 @Entity
 @Table(name = "character_animations")
 public class AnimationTrigger {
