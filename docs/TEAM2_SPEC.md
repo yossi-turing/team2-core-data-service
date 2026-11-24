@@ -248,6 +248,18 @@ erDiagram
 * **`GET /api/v1/patients/{patientId}/sessions`** – שליפה כרונולוגית של היסטוריית המפגשים של המטופל (תאריך, משך, מטרות שהוגדרו, דמות שנבחרה, הערות מטפל).
 * **`GET /api/v1/sessions/{sessionId}`** – שליפת פרטי סשן מלאים, כולל **תמליל השיחה המלא מילה-במילה (`transcript`)** והערות המטפל.
 * **`PATCH /api/v1/sessions/{sessionId}/notes`** – הוספה או עדכון של הערות ידניות של המטפל על הסשן (`{ "therapistSessionNotes": "..." }`).
+* **`POST /api/v1/sessions/{sessionId}/steering`** – שליחת הנחיית זמן אמת מהמטפל לדמות (Live Steering). צוות 2 מאמת בעלות מטפל על הסשן, מתעד את ההנחיה ומעביר אותה מיד למנוע ה-AI (צוות 3).
+  * **Request:**
+    ```json
+    {
+      "instruction": "תעודד את נועם לשתף איך הוא הרגיש בהפסקה",
+      "desiredTone": "חם, מרגיע",
+      "suggestedAnimationTriggerId": "EMPATHIC_NOD"
+    }
+    ```
+    *(השדות `desiredTone` ו-`suggestedAnimationTriggerId` אופציונליים).*
+  * **Response (`200 OK`):** `{ "sessionId": "77a1b2c3-...", "status": "FORWARDED", "forwardedAt": "..." }`.
+* **`POST /api/v1/sessions/{sessionId}/end`** – סיום סשן יזום ע"י המטפל: מאמת בעלות מטפל, מעדכן את סטטוס הסשן ל-`COMPLETED` (כולל `endedAt` ו-`durationSeconds`), מעדכן את צוות 3 / צוות 5 לסיים את השיחה, ומחזיר את אובייקט הסשן המעודכן.
 
 ---
 
