@@ -10,19 +10,20 @@
 
 ---
 
-## חלוקת 9 ה-Issues בין 4 מפתחי הצוות
+## חלוקת ה-Issues בין מפתחי הצוות
 
 | מס' Issue | כותרת ה-Issue | שם ענף (Branch) | מפתח אחראי (GitHub) |
 | :--- | :--- | :--- | :--- |
-| **Issue #1** | תשתית הצפנת שדות ב-DB (AES-256-GCM) ו-Audit Log | `feat/issue-1-crypto-and-audit` | **איתמר אהרונוב** (`@eitamr717`) |
-| **Issue #2** | אבטחה, התחברות מטפל (JWT) ואימות מפתח פנימי (Spring Security) | `feat/issue-2-security-jwt` | **איתמר אהרונוב** (`@eitamr717`) |
-| **Issue #3** | ישויות Hibernate ו-Repositories עבור מטפלים ומטופלים | `feat/issue-3-patient-entities` | **משה אנידג'ר** |
-| **Issue #4** | ישויות Hibernate, Repositories ו-Data Seeder עבור קטלוג דמויות ואנימציות | `feat/issue-4-character-catalog-entities` | **אוהד סבג** (`@ohadjobs2`) |
-| **Issue #5** | ישויות Hibernate ו-Repositories עבור סשנים ופרוטוקול שיחה (Transcript) | `feat/issue-5-session-transcript-entities` | **משה אנידג'ר** |
+| **Issue #1** | תשתית הצפנת שדות ב-DB (AES-256-GCM) ו-Audit Log | `feat/issue-1-crypto-and-audit` | **איתמר אהרונוב** (`@eitamr717`) ✅ |
+| **Issue #2** | אבטחה, התחברות מטפל (JWT) ואימות מפתח פנימי (Spring Security) | `feat/issue-2-security-jwt` | **איתמר אהרונוב** (`@eitamr717`) ✅ |
+| **Issue #3** | ישויות Hibernate ו-Repositories עבור מטפלים ומטופלים (השלמת הצפנת `@Convert` וטסטים) | `feat/issue-3-patient-entities` | **איתמר אהרונוב** (`@eitamr717`) |
+| **Issue #4** | ישויות Hibernate, Repositories ו-Data Seeder עבור קטלוג דמויות ואנימציות | `feat/issue-4-character-catalog-entities` | **אוהד סבג** (`@ohadjobs2`) ✅ |
+| **Issue #5** | ישויות Hibernate ו-Repositories עבור סשנים ופרוטוקול שיחה (השלמת הצפנת `@Convert` וטסטים) | `feat/issue-5-session-transcript-entities` | **איתמר אהרונוב** (`@eitamr717`) |
 | **Issue #6** | מימוש REST API לניהול כרטיסי מטופלים (חוזה 1 מול צוות 1) | `feat/issue-6-patient-crud-api` | **אליה גבאי** (`@EliaGabay`) |
 | **Issue #7** | מימוש REST API לקטלוג הדמויות והאנימציות (חוזה 1 מול צוות 1) | `feat/issue-7-character-catalog-api` | **אליה גבאי** (`@EliaGabay`) |
 | **Issue #8** | מימוש REST API לפתיחת סשן והיסטוריית מפגשים למטפל (חוזה 1 מול צוות 1) | `feat/issue-8-therapist-sessions-api` | **אליה גבאי** (`@EliaGabay`) |
-| **Issue #9** | מימוש Internal REST API מול צוות 3 וצוות 5 – שליפת Context ושמירת פרוטוקול (חוזה 5) | `feat/issue-9-internal-ai-orchestrator-api` | **אוהד סבג** (`@ohadjobs2`) |
+| **Issue #9** | מימוש Internal REST API מול צוות 3 וצוות 5 – שליפת Context ושמירת פרוטוקול (חוזה 5) | `feat/issue-9-internal-ai-orchestrator-api` | **אוהד סבג** (`@ohadjobs2`) ✅ |
+| **Issue #14** | הכנת השרת לפרודקשן (`Spring Boot + PostgreSQL Standalone`: `Dockerfile`, `${PORT:8080}`, `docker-compose.yml`, `.env.example`) | `feat/issue-10-production-deployment` | **אוהד סבג** (`@ohadjobs2`) |
 
 ---
 
