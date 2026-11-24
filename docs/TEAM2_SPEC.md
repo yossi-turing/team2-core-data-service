@@ -106,6 +106,7 @@ erDiagram
 | `personalityProfilePrompt` | `String` (`TEXT`) | פרופיל אישיות מובנה (אופי, טון דיבור, אוצר מילים, ביטויים ייחודיים) עבור ה-AI |
 | `voiceConfigId` | `String` (`VARCHAR`) | מזהה הקול עבור מודל ה-TTS (צוות 5) |
 | `unityModelAssetId` | `String` (`VARCHAR`) | מזהה המודל התלת-ממדי ב-Unity (צוות 4) |
+| `avatarUrl` | `String` (`VARCHAR`, nullable) | כתובת תמונה דו-ממדית (Thumbnail) של הדמות עבור ממשק המטפל (צוות 1) |
 | `animations` | `OneToMany` -> `AnimationTrigger` | רשימת האנימציות הזמינות לדמות זו |
 
 **מבנה ישות `AnimationTrigger` (`character_animations`):**
@@ -220,6 +221,7 @@ erDiagram
         "name": "אסטרו החוקר מהחלל",
         "description": "דמות סקרנית, חמה ומעודדת המדברת בשפה מותאמת לילדים",
         "unityModelAssetId": "Astro3DModel",
+        "avatarUrl": "https://cdn.example.com/characters/char_astro.png",
         "availableAnimations": [
           { "animationTriggerId": "WAVE_HELLO", "displayName": "נפנוף לשלום" },
           { "animationTriggerId": "IDLE_LISTEN", "displayName": "הקשבה" },

@@ -78,6 +78,7 @@ components:
         name: { type: string, example: "אסטרו החוקר מהחלל" }
         description: { type: string, example: "דמות סקרנית, חמה ומעודדת המדברת בשפה מותאמת לילדים" }
         unityModelAssetId: { type: string, example: "Astro3DModel" }
+        avatarUrl: { type: string, nullable: true, example: "https://cdn.example.com/characters/char_astro.png", description: "2D thumbnail URL for the Therapist Back Office UI (Team 1)" }
         voiceConfigId: { type: string, example: "voice_astro_he_01" }
         availableAnimations:
           type: array
