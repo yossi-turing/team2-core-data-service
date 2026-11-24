@@ -134,6 +134,7 @@ public final class SecurityUtils {
   * `String getPersonalityProfilePrompt()` / `void setPersonalityProfilePrompt(String personalityProfilePrompt)`
   * `String getVoiceConfigId()` / `void setVoiceConfigId(String voiceConfigId)`
   * `String getUnityModelAssetId()` / `void setUnityModelAssetId(String unityModelAssetId)`
+  * `String getAvatarUrl()` / `void setAvatarUrl(String avatarUrl)` (תמונה דו-ממדית Thumbnail עבור צוות 1)
   * `List<AnimationTrigger> getAvailableAnimations()` / `void setAvailableAnimations(List<AnimationTrigger> availableAnimations)`
 * **`com.therapy.coredataservice.entity.AnimationTrigger`:**
   * `String getAnimationTriggerId()` / `void setAnimationTriggerId(String animationTriggerId)`

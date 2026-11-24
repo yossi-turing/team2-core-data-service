@@ -78,6 +78,7 @@ components:
         name: { type: string, example: "אסטרו החוקר מהחלל" }
         description: { type: string, example: "דמות סקרנית, חמה ומעודדת המדברת בשפה מותאמת לילדים" }
         unityModelAssetId: { type: string, example: "Astro3DModel" }
+        avatarUrl: { type: string, nullable: true, example: "https://cdn.example.com/characters/char_astro.png", description: "2D thumbnail URL for the Therapist Back Office UI (Team 1)" }
         voiceConfigId: { type: string, example: "voice_astro_he_01" }
         availableAnimations:
           type: array
@@ -127,6 +128,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TranscriptEntryDto'
+
+    SessionSteeringRequestDto:
+      type: object
+      required: [instruction]
+      properties:
+        instruction: { type: string, example: "תעודד את הילד לשתף מה הוא הרגיש בהפסקה" }
+        desiredTone: { type: string, nullable: true, example: "חם, מרגיע" }
+        suggestedAnimationTriggerId: { type: string, nullable: true, example: "EMPATHIC_NOD" }
+
+    SessionSteeringResponseDto:
+      type: object
+      properties:
+        sessionId: { type: string, format: uuid }
+        status: { type: string, example: "FORWARDED" }
+        forwardedAt: { type: string, format: date-time }
 
     SessionAiContextResponseDto:
       type: object
@@ -353,6 +369,48 @@ paths:
       responses:
         '200':
           description: Notes updated
+
+  /api/v1/sessions/{sessionId}/steering:
+    post:
+      tags: ["Contract 1: Therapy Sessions (Team 1)"]
+      summary: Send live steering instruction from therapist to character (forwarded immediately to Team 3 AI Engine)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionSteeringRequestDto'
+      responses:
+        '200':
+          description: Steering instruction recorded and forwarded to AI Engine
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionSteeringResponseDto'
+
+  /api/v1/sessions/{sessionId}/end:
+    post:
+      tags: ["Contract 1: Therapy Sessions (Team 1)"]
+      summary: End an active session initiated by the therapist (sets status to COMPLETED and notifies Team 3 / AI Engine)
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema: { type: string, format: uuid }
+      responses:
+        '200':
+          description: Session ended and updated to COMPLETED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponseDto'
 
   /internal/api/v1/sessions/{sessionId}/context:
     get:
