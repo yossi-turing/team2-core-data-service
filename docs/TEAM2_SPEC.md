@@ -353,7 +353,44 @@ erDiagram
     ]
   }
   ```
-* **Response (`200 OK`):** `{ "sessionId": "77a1b2c3-...", "status": "COMPLETED", "savedTranscriptCount": 3 }`
+* **Response (`200 OK` – ACK):** `{ "sessionId": "77a1b2c3-...", "status": "COMPLETED", "savedTranscriptCount": 3 }`
+* **Idempotency וטיפול ב-Retry / סיום מפגש (`/end`):**
+  * השמירה מזוהה באמצעות סימון מפורש (`transcriptArchived`) ו-Hash של התוכן (`transcriptPayloadHash`), ולא רק לפי רשימה ריקה.
+  * אם הסשן כבר עבר ל-`COMPLETED` בעקבות `POST /api/v1/sessions/{sessionId}/end` אך `transcriptArchived == false` – הקריאה שומרת את התמליל ומחזירה `200 OK` (ACK).
+  * במקרה של **Retry עם אותו תוכן שכבר נשמר** (`transcriptArchived == true` ו-Hash תואם) – מחזיר **`200 OK`** (ACK) ללא שכפול.
+  * במקרה של שליחת **תמליל שונה** לסשן שכבר נשמר (`transcriptArchived == true` ו-Hash שונה) – מחזיר **`409 Conflict`**.
+
+#### 5.3 התראות יוצאות מצוות 2 לצוות 3 (Live Steering וסיום מפגש)
+כל קריאה יוצאת מצוות 2 לצוות 3 מתבצעת ב-HTTPS עם Header פנימי ייעודי `X-Internal-Service-Key` (ממשתנה סביבה `TEAM3_INTERNAL_API_KEY`, לעולם לא בקוד):
+
+1. **העברת הנחיית זמן אמת (`Live Steering`):**
+   * `POST {AI_SERVICE_BASE_URL}/internal/api/v1/sessions/{sessionId}/steering`
+   * **Request JSON:**
+     ```json
+     {
+       "eventId": "550e8400-e29b-41d4-a716-446655440001",
+       "instruction": "לעודד את הילד לדבר על הרגשות שלו",
+       "desiredTone": "calm",
+       "suggestedAnimationTriggerId": "EMPATHIC_NOD",
+       "issuedAt": "2026-11-25T20:00:00Z"
+     }
+     ```
+     *(`eventId` הוא UUID ייחודי שצוות 2 יוצר עבור Idempotency; `instruction` חובה; `desiredTone` ו-`suggestedAnimationTriggerId` אופציונליים).*
+   * **תגובה מצופה מצוות 3:** `200 OK`.
+
+2. **התראת סיום מפגש (`End Session Notification`):**
+   * `POST {AI_SERVICE_BASE_URL}/internal/api/v1/sessions/{sessionId}/end`
+   * **Request JSON:**
+     ```json
+     {
+       "eventId": "550e8400-e29b-41d4-a716-446655440002",
+       "startedAt": "2026-11-25T19:30:00Z",
+       "endedAt": "2026-11-25T20:00:00Z",
+       "durationSeconds": 1800
+     }
+     ```
+     *(צוות 2 מעביר את הזמנים הרשמיים של הסשן כדי שצוות 3 יוכל להשתמש בהם בשליחת `POST /complete`).*
+   * **תגובה מצופה מצוות 3:** `202 Accepted` (לאחר מכן צוות 3 מקפיא את התמליל ושולח `POST /internal/api/v1/sessions/{sessionId}/complete`).
 
 ---
 
