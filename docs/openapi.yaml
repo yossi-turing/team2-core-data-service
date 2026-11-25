@@ -448,4 +448,6 @@ paths:
               $ref: '#/components/schemas/SessionCompleteRequestDto'
       responses:
         '200':
-          description: Session completed and transcript encrypted at rest
+          description: Session completed and transcript encrypted at rest (idempotent ACK when retried with identical payload)
+        '409':
+          description: Conflict – transcript was already archived with different content
